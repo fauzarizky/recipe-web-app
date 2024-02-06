@@ -27,6 +27,11 @@ export const Profile = () => {
     }
   }, []);
 
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    handleGetUserData();
+  };
+
   useEffect(() => {
     handleGetUserData();
   }, [handleGetUserData]);
@@ -52,7 +57,7 @@ export const Profile = () => {
             Updated at: {userData.updatedAt ? userData.updatedAt : "Not Available"}
           </Text>
         </Box>
-        <EditProfileModal isOpen={showEditModal} onClose={() => setShowEditModal(false)} userData={userData} />
+        <EditProfileModal isOpen={showEditModal} onClose={handleCloseEditModal} userData={userData} />
       </main>
       <footer className="px-5">
         <Navigation activePage={3} />
