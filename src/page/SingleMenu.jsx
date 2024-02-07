@@ -2,11 +2,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import getMealByName from "../api/getMealByName";
 import { Box, Button, Heading, Image, Text, useToast } from "@chakra-ui/react";
+import useSaveRecipe from "../hooks/useSaveRecipe";
+import useRemoveSaveRecipe from "../hooks/useRemoveSaveRecipe";
+import useLikeRecipe from "../hooks/useLikeRecipe";
+import useRemoveLikeRecipe from "../hooks/useRemoveLikeRecipe";
 
 export const SingleMenu = () => {
   const { name } = useParams();
   const [menu, setMenu] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [savedRecipeData, setSavedRecipeData] = useState(JSON.parse(localStorage.getItem("savedRecipe")) || []);
+  const [isRecipeSaved, setIsRecipeSaved] = useState(false);
+  const [likedRecipeData, setLikedRecipeData] = useState(JSON.parse(localStorage.getItem("likedRecipe")) || []);
+  const [isRecipeLiked, setIsRecipeLiked] = useState(false);
+  
+  const saveRecipe = useSaveRecipe(menu, savedRecipeData, setSavedRecipeData);
+  const removeRecipe = useRemoveSaveRecipe(menu, savedRecipeData, setSavedRecipeData);
+  const likeRecipe = useLikeRecipe(menu, likedRecipeData, setLikedRecipeData);
+  const removeLikeRecipe = useRemoveLikeRecipe(menu, likedRecipeData, setLikedRecipeData);
   const toast = useToast();
 
   const handleGetSingleMenu = async () => {
@@ -42,7 +55,7 @@ export const SingleMenu = () => {
 
       <main className="px-5">
         {menu ? (
-          <Box display={"flex"} flexDirection={"column"} gap={{base: "5px", md: "10px"}}>
+          <Box display={"flex"} flexDirection={"column"} gap={{ base: "5px", md: "10px" }}>
             <Image width={"150px"} src={menu.strMealThumb} alt={menu.strMeal} />
             <Text mt={3}>
               <span className="font-bold">From: </span> {menu.strArea} <span className="font-bold"> Category: </span> {menu.strCategory}
@@ -66,6 +79,72 @@ export const SingleMenu = () => {
             <Button mt={3} bgColor={"#44995F"} _hover={{ bgColor: "#4B6352" }} transitionDuration={"0.7s"} textColor={"white"} onClick={() => window.history.back()}>
               Back
             </Button>
+
+            <Box display={"flex"} gap={"10px"} mt={3} w={"100%"}>
+              {isRecipeLiked ? (
+                <Button
+                  onClick={() => {
+                    removeLikeRecipe(menu, likedRecipeData, setLikedRecipeData);
+                    setIsRecipeLiked(false);
+                  }}
+                  variant="solid"
+                  size={"sm"}
+                  bgColor="#44995F"
+                  color={"white"}
+                  _hover={{ bgColor: "#4B6352" }}
+                  width={"50%"}
+                  >
+                  <ion-icon name="trash-outline"></ion-icon>
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    likeRecipe(menu, likedRecipeData, setLikedRecipeData);
+                    setIsRecipeLiked(true);
+                  }}
+                  variant="solid"
+                  size={"sm"}
+                  bgColor="#44995F"
+                  color={"white"}
+                  _hover={{ bgColor: "#4B6352" }}
+                  width={"50%"}
+                  >
+                  <ion-icon name="heart-outline"></ion-icon>
+                </Button>
+              )}
+
+              {isRecipeSaved ? (
+                <Button
+                  onClick={() => {
+                    removeRecipe(menu, savedRecipeData, setSavedRecipeData);
+                    setIsRecipeSaved(false);
+                  }}
+                  variant="solid"
+                  size={"sm"}
+                  bgColor="#44995F"
+                  color={"white"}
+                  _hover={{ bgColor: "#4B6352" }}
+                  width={"50%"}
+                  >
+                  <ion-icon name="trash-outline"></ion-icon>
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    saveRecipe(menu, savedRecipeData, setSavedRecipeData);
+                    setIsRecipeSaved(true);
+                  }}
+                  variant="solid"
+                  size={"sm"}
+                  bgColor="#44995F"
+                  color={"white"}
+                  _hover={{ bgColor: "#4B6352" }}
+                  width={"50%"}
+                  >
+                  <ion-icon name="bookmark-outline"></ion-icon>
+                </Button>
+              )}
+            </Box>
           </Box>
         ) : (
           <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"center"}>

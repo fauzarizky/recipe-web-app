@@ -27,14 +27,14 @@ export const Homepage = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   const userData = JSON.parse(localStorage.getItem("userInfoRecipeApp")) || "";
-  const [savedRecipeData, setSavedRecipeData] = useState(JSON.parse(localStorage.getItem("savedRecipe")) || []);
+  const [savedRecipeData,  setSavedRecipeData] = useState(JSON.parse(localStorage.getItem("savedRecipe")) || []);
   const [isRecipeSaved, setIsRecipeSaved] = useState(false);
   const [likedRecipeData, setLikedRecipeData] = useState(JSON.parse(localStorage.getItem("likedRecipe")) || []);
   const [isRecipeLiked, setIsRecipeLiked] = useState(false);
-  const saveRecipe = useSaveRecipe(randomMeal[0]);
-  const removeRecipe = useRemoveSaveRecipe(randomMeal[0]);
-  const likeRecipe = useLikeRecipe(randomMeal[0]);
-  const removeLikeRecipe = useRemoveLikeRecipe(randomMeal[0]);
+  const saveRecipe = useSaveRecipe(randomMeal[0], savedRecipeData, setSavedRecipeData);
+  const removeRecipe = useRemoveSaveRecipe(randomMeal[0], savedRecipeData, setSavedRecipeData);
+  const likeRecipe = useLikeRecipe(randomMeal[0], likedRecipeData, setLikedRecipeData);
+  const removeLikeRecipe = useRemoveLikeRecipe(randomMeal[0], likedRecipeData, setLikedRecipeData);
 
   const toast = useToast();
 

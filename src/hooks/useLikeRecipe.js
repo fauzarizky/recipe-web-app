@@ -1,13 +1,11 @@
 import { useToast } from "@chakra-ui/react";
-import { useState } from "react";
 
-const useLikeRecipe = (recipe) => {
-  const [likedRecipe, setlikedRecipe] = useState(JSON.parse(localStorage.getItem("likedRecipe")) || []);
+const useLikeRecipe = (recipe, likedRecipeData, setLikedRecipeData) => {
   const toast = useToast();
 
   const likeRecipe = () => {
-    const newLikedRecipe = [...likedRecipe, recipe];
-    setlikedRecipe(newLikedRecipe);
+    const newLikedRecipe = [...likedRecipeData, recipe];
+    setLikedRecipeData(newLikedRecipe);
     localStorage.setItem("likedRecipe", JSON.stringify(newLikedRecipe));
     toast({
       title: "Success",

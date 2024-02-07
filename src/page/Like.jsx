@@ -47,11 +47,11 @@ export const Like = () => {
         <Box display={"flex"} flexDirection={"column"} gap={2} alignItems={"center"} h={"67vh"} w={"100%"} overflowY={"auto"} borderRadius={"lg"} pr={2}>
           {savedData.length > 0 ? (
             filteredData.map((meal) => (
-              <Box key={meal.idMeal} display={"flex"} gap={2} alignItems={"center"} borderRadius={"md"} h={"20vh"} minW={"100%"} overflow={"hidden"} bgColor={"white"}>
-                <Box w={"40%"}>
+              <Box key={meal.idMeal} display={"flex"} gap={2} alignItems={"center"} borderRadius={"md"} h={"20vh"} minW={"100%"} bgColor={"white"}>
+                <Box w={"50%"} h={"100%"}>
                   <Image w={"100%"} h={"100%"} objectFit={"cover"} src={meal.strMealThumb} alt={meal.strMeal} />
                 </Box>
-                <Box w={"60%"}>
+                <Box w={"45%"}>
                   <Heading size="sm" isTruncated>
                     {meal.strMeal}
                   </Heading>
@@ -59,7 +59,7 @@ export const Like = () => {
                     From {meal.strArea}, {meal.strCategory} category
                   </Text>
 
-                  <Box display={"flex"} justifyContent={{ base: "flex-end", md: "flex-start" }} alignItems={"center"} mr={3} gap={2}>
+                  <Box display={"flex"} justifyContent={{ base: "flex-end", md: "flex-start" }} alignItems={"center"} gap={2}>
                     <Button onClick={() => setRecipeModal(true)} variant="solid" size={"sm"} bgColor="#44995F" color={"white"} _hover={{ bgColor: "#4B6352" }}>
                       View
                     </Button>
